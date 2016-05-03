@@ -11,6 +11,6 @@ This optimization is not at the cost of accuracy which has been shown to be as g
 for a phone is available. <br />
 Cross-Calibration.m - This file helps to cross-calibrate different phones against the primary device and predicting the location
 (using modified kNN) <br />
-recursive_bagging_multiple-  This helps in identifying the best locations to log in an indoor environment
+recursive_bagging_multiple-  This helps in identifying the best locations to log in an indoor environment <br />
 Error_Grayscale.m - This plots the error graphs to know the accuracy <br />
 Fall_2015_BTP_Report.pdf - This details my thesis. [Last updated Decemember 2015] <br />
