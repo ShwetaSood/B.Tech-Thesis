@@ -1,6 +1,6 @@
-# BTP
+# B.Tech Thesis
 <B> Details on the project : </B> <br />
-The current study proposes an approach that leverages site survey done by any mobile phone only once, 
+My thesis leverages site survey done by any mobile phone only once, 
 which is utilized by other phones by calibrating their RSS values logged at only 5 points against it. 
 This is achieved without any assumptions about the site, the placement of access points (AP) or additional costs of 
 infrastructure installment. <br />
