@@ -5,7 +5,7 @@
 clc;
 clear all;
 
-%{
+
 [num,txt,raw]=xlsread('./../Dataset/Acad_14n15oct_shweta.csv'); %
 [r,c]=size(raw);
 bssid=unique(txt(2:r,7));
@@ -37,14 +37,6 @@ for i=1:size(bssid,1)
         medians(str2num(cell2mat(unique_loc(j))),1)=median(values);
     end
     
-%     for j=1:length(row)
-%         pos=str2num(cell2mat(txt(row(1,j),2)));
-%         val=str2num(cell2mat(txt(row(1,j),5)));
-%         %CHANGE
-%         linear_val=10^(double(val)/10);
-%         sum(pos,1)=sum(pos,1)+linear_val;
-%         freq(pos,1)=freq(pos,1)+1;
-%     end
     for j=2:32
         if(freq(j-1)~=0)
             bssid(i,j)={medians(j-1)};
@@ -85,14 +77,6 @@ for i=1:size(testbssid,1)
         medians(str2num(cell2mat(unique_loc(j))),1)=median(values);
     end
     
-%     for j=1:length(row)
-%         pos=str2num(cell2mat(testtxt(row(1,j),2)));
-%         val=str2num(cell2mat(testtxt(row(1,j),5)));
-%         %CHANGE
-%         linear_val=10^(double(val)/10);
-%         sum(pos,1)=sum(pos,1)+linear_val;
-%         freq(pos,1)=freq(pos,1)+1;
-%     end
     for j=2:32
         if(freq(j-1)~=0)
            %testbssid(i,j)={sum(j-1)/freq(j-1)};
@@ -104,28 +88,8 @@ for i=1:size(testbssid,1)
 end
 %}
 
-load('Acad_14n15oct_shweta.mat');
-load('Acad_14n15oct_geetali.mat');
-
 common=intersect(bssid(:,1),testbssid(:,1));
-%points=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]; %none downsampling
-%points=[1,3,4,5,7,8,9,11,12,13,15,16,18,19,21,22,23,24,25,26,27,28,29,30,31];  %25 downsampling
-%points=[1,4,7,8,11,12,13,15,16,18,19,21,23,24,25,26,28,29,30,31];  %20 downsampling
-%points=[4,7,11,13,15,16,19,23,24,25,26,28,29,30,31]; % 15 downsampling
-%points=[4,7,8,11,12,13,16,18,19,21,23,25,26,28,30]; % 15 downsampling
-%points=[4,7,11,13,16,19,23,25,26,28]; %10 downsampling
-%points=[4,7,8,12,13,18,19,23,26,30]; % 10 downsampling
-%points=[4,7,11,16,28];  %5 downsampling
-points=[4,7,12,18,26];  %5 downsampling
-
-%points=[4];
-%For Deepali
-%points=[1,2,7,8,9,10,11,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]; %25 downsampling
-%points=[1,2,7,8,9,10,14,15,16,18,20,21,22,23,25,26,28,29,30,31]; %20 downsampling
-%points=[2,7,10,14,16,18,20,21,22,23,25,26,28,29,31]; %15 downsampling
-%points=[2,7,10,14,18,21,23,25,26,31]; %10 downsampling
-%points=[10,14,21,23,25]; %5 downsampling
-%points=[23]; %5 downsampling
+points=[4,7,12,18,26];  %5 downsampling (obtained from recursive bagging)
 
 len=length(intersect(bssid(:,1),testbssid(:,1)));
 X=zeros(1,len);
@@ -140,8 +104,6 @@ j=1;
             a=cell2mat(testbssid(testrow,pos));
             b=cell2mat(bssid(row,pos));
             if(a~=inf && b~=inf)
-                %diff=a-b;
-                %disp(diff);
                 X(j)=a;
                 Y(j)=b;
                 j=j+1;
@@ -180,14 +142,9 @@ for outer=1:breadth %Each floor block wise iteration
     start=min(find(gitnum(:,1)==block_no))+1;
     stop=max(find(gitnum(:,1)==block_no))+1;
     gitbssid=unique(gittxt(start:stop,7));
-    %len=size(gitbssid,1);
-    %dis=zeros(1,length(intersect(bssid(:,1),gitbssid(:,1))));
     dis=zeros(1,1);
     for i=1:size(gitbssid,1)
-        row=find(strcmp({gittxt{1:testr,7}},gitbssid(i,1)));
-        %sum=zeros(31,1); %
-        %freq=zeros(31,1); %
-        
+        row=find(strcmp({gittxt{1:testr,7}},gitbssid(i,1)));       
         unique_loc=unique(gittxt(row(1,:),2));
         unique_loc_len=length(unique_loc);
         values=zeros(length(row),1); %all values for a given bssid and given location
@@ -204,21 +161,9 @@ for outer=1:breadth %Each floor block wise iteration
             values=values(1:length(values_in_cell));
             medians(str2num(cell2mat(unique_loc(j))),1)=median(values);
         end
-        
-%         for j=1:length(row)
-%             pos=str2num(cell2mat(gittxt(row(1,j),2)));
-%             val=str2num(cell2mat(gittxt(row(1,j),5)));
-%             %CHANGE
-%             linear_val=10^(double(val)/10);
-%             sum(pos,1)=sum(pos,1)+linear_val;
-%             freq(pos,1)=freq(pos,1)+1;
-%         end
         for j=2:32 %TESTDATA
             if(freq(j-1)~=0)
                 gitbssid(i,j)={P(1)*medians(j-1)+P(2)}; %With median
-                %gitbssid(i,j)={medians(j-1)};
-                %gitbssid(i,j)={P(1)*sum(j-1,1)/freq(j-1,1)+P(2)}; %Mapping - WITH CALIBRATION
-                %gitbssid(i,j)={sum(j-1,1)/freq(j-1,1)}; %WITHOUT CALIBRATION
             else
                  gitbssid(i,j)={inf};
             end
