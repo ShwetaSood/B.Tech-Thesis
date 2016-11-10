@@ -1,6 +1,5 @@
 %This code predicts location after cross-calibration on points found by recursive bagging.
-%Calibration by mapping all points of geetali's phone to my phone -100% -
-%Downsampled also
+%Finally predicts location using the Localization Algorithm
 
 clc;
 clear all;
@@ -40,7 +39,6 @@ for i=1:size(bssid,1)
     for j=2:32
         if(freq(j-1)~=0)
             bssid(i,j)={medians(j-1)};
-           %bssid(i,j)={sum(j-1)/freq(j-1)};
         else
            bssid(i,j)={inf};
         end
@@ -79,7 +77,6 @@ for i=1:size(testbssid,1)
     
     for j=2:32
         if(freq(j-1)~=0)
-           %testbssid(i,j)={sum(j-1)/freq(j-1)};
            testbssid(i,j)={medians(j-1)};
         else
            testbssid(i,j)={inf};
