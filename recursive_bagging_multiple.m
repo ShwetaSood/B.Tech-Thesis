@@ -1,6 +1,4 @@
-%Calibration by mapping all points of geetali's phone to my phone -100% -
-%Downsampled also
-
+%Recursive Bagging - obtaining best points
 clc;
 clear all;
 
