@@ -1,6 +1,6 @@
 # B.Tech Thesis
 <b> CAIL : Cross-Calibration for Accurate Indoor Localization Without Extensive Site Survey </b><br><br>
-Details on the project : <br><br>
+Details on the project :
 <p>
 My thesis leverages site survey done by any mobile phone only once, 
 which is utilized by other phones by calibrating their RSS values logged at only 5 points against it. 
@@ -18,5 +18,5 @@ for a phone is available.</p>
 (using modified k Nearest Neighbor)</li>
 <li>recursive_bagging_multiple.m-  This helps in identifying the best locations to log in an indoor environment.</li>
 <li>Error_Grayscale.m - This plots the error graphs to know the accuracy.</li>
-Fall_2015_BTP_Report.pdf - This details my thesis. [Last updated Decemember 2015] <br />
+<li>Fall_2015_BTP_Report.pdf - This details my thesis. [Last updated Decemember 2015]</li>
 </ol>
