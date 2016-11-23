@@ -14,7 +14,7 @@ for these devices.</p>
 This optimization is not at the cost of accuracy which has been shown to be as good as the accuracy when the entire fingerprint 
 for a phone is available.</p>
 <ol type="1">
-<li>Cross-Calibration.m - This file helps to cross-calibrate different phones against the primary device and predicting the location.
+<li>Localization_and_Cross-Calibration.m - This file helps to cross-calibrate different phones against the primary device and predicting the location.
 (using modified k Nearest Neighbor)</li>
 <li>recursive_bagging_multiple.m-  This helps in identifying the best locations to log in an indoor environment.</li>
 <li>Error_Grayscale.m - This plots the error graphs to know the accuracy.</li>
