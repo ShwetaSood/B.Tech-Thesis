@@ -1,17 +1,5 @@
 clc;
 clear all;
-%{
-[num,txt,raw]=xlsread('./../matrix_31_map.csv'); %
-for i=1:size(num,1)
-    for j=1:size(num,2)
-        if(isnan(num(i,j)))
-            disp('true');
-            num(i,j)=num(j,i);
-        end
-    end
-end
-csvwrite('./../Matrix.csv',num);
-%}
 
 [num,txt,raw]=xlsread('./../Matrix.csv'); %
 [obtnum,obttxt,obtraw]=xlsread('./../Accuracy_Dataset/dbm/Obtained_deepali_recur3_base.csv');
@@ -19,7 +7,6 @@ csvwrite('./../Matrix.csv',num);
 [r,c]=size(num);
 [obtr,obtc]=size(obtnum);
 [achr,achc]=size(achnum);
-%bins=zeros(1,4);
 bins=[0;0;0;0];
 for i=1:obtr
     obt_pos=find(obtnum(i,:)==1);
@@ -43,15 +30,10 @@ hold on;
 bar(3,(bins(3)/total)*100,'FaceColor',[0.55 0.55 0.55]);
 hold on;
 bar(4,(bins(4)/total)*100,'FaceColor',[0.8 0.8 0.8]);
-%title('Bar Graph Display Distribution of testing samples');
+title('Bar Graph Display Distribution of testing samples');
 xlabel('Error');
 ylabel('Frequency %');
 ylim([0 100]);
 legend('Correct Identified', 'error within 1 block', 'error within 2 blocks', 'error within 3+ blocks');
 Labels = {'0', '1', '2', '3+'};
 set(gca, 'XTick', 1:4, 'XTickLabel', Labels);
-%{
-for i = 1:numel(bins)
-    text(i -0.25, bins(i)/total*100, ['freq = ', num2str(round(bins(i)/total *100,2)),'%'], 'VerticalAlignment', 'top', 'FontSize', 12,'Color','r')
-end
-%}
