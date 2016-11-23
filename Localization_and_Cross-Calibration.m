@@ -17,8 +17,6 @@ end
 
 for i=1:size(bssid,1)
     row=find(strcmp({txt{1:r,7}},bssid(i,1)));
-    %sum=zeros(31,1); %
-    %freq=zeros(31,1); %
     unique_loc=unique(txt(row(1,:),2));
     unique_loc_len=length(unique_loc);
     values=zeros(length(row),1); %all values for a given bssid and given location
@@ -94,7 +92,6 @@ Y=zeros(1,len);
 j=1;
     for k=1:length(points)
         pos=points(k)+1;
-        %disp(['Difference in value for position ' num2str(points(k))]);
         for i=1:len
             testrow=find(strcmp({testbssid{:,1}},common(i)));
             row=find(strcmp({bssid{:,1}},common(i)));
@@ -114,7 +111,7 @@ s.MarkerEdgeColor = 'b';
 s.MarkerFaceColor = [0 0.5 0.5];
 xlabel('Geetali phone RSSI');
 ylabel('Shweta phone RSSI');
-title('Distribution of RSSI points for Calibration');
+title('Distribution of RSSI points for Calibration'); %Cross-Calibration Graph of phones to fit a line
 P = polyfit(X,Y,1);
 yfit = P(1)*X+P(2);
 hold on;
@@ -122,6 +119,8 @@ plot(X,yfit,'r-.');
 
 slope=P(1); %Of the found equation
 intercept=P(2); %Of the found equation
+
+% Reading test data for prediction
 [gitnum,gittxt,gitraw]=xlsread('./../Dataset/Test_october_1n7_nearby.csv');
 [testr,testc]=size(gittxt);
 for i=1:testr-1
@@ -191,7 +190,7 @@ for outer=1:breadth %Each floor block wise iteration
             end
         end
         if(length(dis)~=0)
-            disp(['Floor/Wing Wing wise prediction is ' num2str(mode(dis))]);
+            disp(['Floor/Wing Wing wise prediction is ' num2str(mode(dis))]); % prediction of location
         else
             disp('Location not found');
         end
